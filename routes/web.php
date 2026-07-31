@@ -35,6 +35,13 @@ Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])
     ->middleware('admin')
     ->name('admin.dashboard');
 
+Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
+Route::get('/admin/dashboard', 'AdminDashboard')->name('admin.dashboard');
+Route::get('/admin/spcialities', 'AdminSpcialities')->name('admin.spcialities');
+
+    });
+    /// End Admin Group Middleware 
+
 // Shared logout (works for both roles via the auth guard)
 Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
