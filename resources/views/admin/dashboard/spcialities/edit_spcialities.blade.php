@@ -1,0 +1,60 @@
+@extends('admin.admin_master')
+@section('admin')
+<div class="content container-fluid">
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-7 col-auto">
+            <h3 class="page-title">Edit Speciality</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.specialities.all') }}">Specialities</a></li>
+                <li class="breadcrumb-item active">Edit Speciality</li>
+            </ul>
+        </div>
+        <div class="col-sm-5 col">
+            <a href="{{ route('admin.specialities.all') }}" class="btn btn-secondary float-end mt-2">Back</a>
+        </div>
+    </div>
+</div>
+
+@include('admin.partials.alerts')
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ route('admin.specialities.update', $speciality) }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label class="mb-2">Speciality Name</label>
+                                <input type="text" name="name" class="form-control"
+                                    value="{{ old('name', $speciality->name) }}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label class="mb-2">Image</label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                                @if ($speciality->image)
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/'.$speciality->image) }}"
+                                            alt="{{ $speciality->name }}" class="rounded" width="80" height="80">
+                                        <small class="d-block text-muted">Leave empty to keep current image.</small>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Speciality</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@endsection

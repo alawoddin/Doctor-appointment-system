@@ -4,18 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Speciality;
+use App\Services\SpecialityImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SpecialityController extends Controller
 {
+    public function __construct(
+        private SpecialityImageService $imageService
+    ) {}
+
     public function index(): View
     {
         $specialities = Speciality::latest()->get();
 
         return view('admin.dashboard.spcialities.all_spcialities', compact('specialities'));
+    }
+
+    public function create(): View
+    {
+        return view('admin.dashboard.spcialities.add_spcialities');
     }
 
     public function store(Request $request): RedirectResponse
@@ -28,7 +37,7 @@ class SpecialityController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('specialities', 'public');
+            $imagePath = $this->imageService->store($request->file('image'));
         }
 
         Speciality::create([
@@ -41,6 +50,11 @@ class SpecialityController extends Controller
             ->with('success', 'Speciality added successfully.');
     }
 
+    public function edit(Speciality $speciality): View
+    {
+        return view('admin.dashboard.spcialities.edit_spcialities', compact('speciality'));
+    }
+
     public function update(Request $request, Speciality $speciality): RedirectResponse
     {
         $validated = $request->validate([
@@ -51,11 +65,8 @@ class SpecialityController extends Controller
         $imagePath = $speciality->image;
 
         if ($request->hasFile('image')) {
-            if ($speciality->image) {
-                Storage::disk('public')->delete($speciality->image);
-            }
-
-            $imagePath = $request->file('image')->store('specialities', 'public');
+            $this->imageService->delete($speciality->image);
+            $imagePath = $this->imageService->store($request->file('image'));
         }
 
         $speciality->update([
@@ -70,10 +81,7 @@ class SpecialityController extends Controller
 
     public function destroy(Speciality $speciality): RedirectResponse
     {
-        if ($speciality->image) {
-            Storage::disk('public')->delete($speciality->image);
-        }
-
+        $this->imageService->delete($speciality->image);
         $speciality->delete();
 
         return redirect()

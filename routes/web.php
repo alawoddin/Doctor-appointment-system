@@ -37,7 +37,9 @@ Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/all/specialities', [SpecialityController::class, 'index'])->name('admin.specialities.all');
+    Route::get('/admin/add/specialities', [SpecialityController::class, 'create'])->name('admin.specialities.create');
     Route::post('/admin/add/specialities', [SpecialityController::class, 'store'])->name('admin.specialities.store');
+    Route::get('/admin/edit/specialities/{speciality}', [SpecialityController::class, 'edit'])->name('admin.specialities.edit');
     Route::put('/admin/edit/specialities/{speciality}', [SpecialityController::class, 'update'])->name('admin.specialities.update');
     Route::delete('/admin/delete/specialities/{speciality}', [SpecialityController::class, 'destroy'])->name('admin.specialities.destroy');
 

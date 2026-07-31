@@ -13,29 +13,13 @@
             </ul>
         </div>
         <div class="col-sm-5 col">
-            <a href="#Add_Specialities_details" data-bs-toggle="modal" class="btn btn-primary float-end mt-2">Add</a>
+            <a href="{{ route('admin.specialities.create') }}" class="btn btn-primary float-end mt-2">Add</a>
         </div>
     </div>
 </div>
 <!-- /Page Header -->
 
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+@include('admin.partials.alerts')
 
 <div class="row">
     <div class="col-sm-12">
@@ -66,8 +50,8 @@
                                     </td>
                                     <td>
                                         <div class="actions">
-                                            <a class="btn btn-sm bg-success-light" data-bs-toggle="modal"
-                                                href="#edit_speciality_{{ $speciality->id }}">
+                                            <a class="btn btn-sm bg-success-light"
+                                                href="{{ route('admin.specialities.edit', $speciality) }}">
                                                 <i class="fe fe-pencil"></i> Edit
                                             </a>
                                             <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal"
@@ -91,79 +75,7 @@
 </div>
 </div>
 
-<!-- Add Modal -->
-<div class="modal fade" id="Add_Specialities_details" aria-hidden="true" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Specialities</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('admin.specialities.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <div class="mb-3">
-                                <label class="mb-2">Specialities</label>
-                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="mb-3">
-                                <label class="mb-2">Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /ADD Modal -->
-
 @foreach ($specialities as $speciality)
-    <!-- Edit Details Modal -->
-    <div class="modal fade" id="edit_speciality_{{ $speciality->id }}" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Specialities</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.specialities.update', $speciality) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <div class="mb-3">
-                                    <label class="mb-2">Specialities</label>
-                                    <input type="text" name="name" class="form-control"
-                                        value="{{ old('name', $speciality->name) }}" required>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="mb-3">
-                                    <label class="mb-2">Image</label>
-                                    <input type="file" name="image" class="form-control" accept="image/*">
-                                    @if ($speciality->image)
-                                        <small class="text-muted">Leave empty to keep current image.</small>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Edit Details Modal -->
-
     <!-- Delete Modal -->
     <div class="modal fade" id="delete_speciality_{{ $speciality->id }}" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">

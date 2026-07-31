@@ -27,6 +27,23 @@ it('displays all specialities for admin', function () {
         ->assertSee('#SP'.str_pad((string) $speciality->id, 3, '0', STR_PAD_LEFT));
 });
 
+it('displays add speciality page for admin', function () {
+    $this->actingAs($this->admin, 'admin')
+        ->get(route('admin.specialities.create'))
+        ->assertOk()
+        ->assertSee('Add Speciality');
+});
+
+it('displays edit speciality page for admin', function () {
+    $speciality = Speciality::factory()->create(['name' => 'Cardiology']);
+
+    $this->actingAs($this->admin, 'admin')
+        ->get(route('admin.specialities.edit', $speciality))
+        ->assertOk()
+        ->assertSee('Edit Speciality')
+        ->assertSee('Cardiology');
+});
+
 it('stores a new speciality', function () {
     $this->actingAs($this->admin, 'admin')
         ->post(route('admin.specialities.store'), [
