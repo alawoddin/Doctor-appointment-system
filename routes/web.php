@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Patient\PatientController;
-use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\SpecialityController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Doctor\DoctorController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('frontend.index');
 });
- 
+
 // Patient dashboard — only accessible by patients
 Route::get('/dashboard', function () {
     return view('patient.index');
@@ -35,15 +35,18 @@ Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])
     ->middleware('admin')
     ->name('admin.dashboard');
 
-Route::middleware(['admin'])->controller(AdminController::class)->group(function () {
-Route::get('/admin/dashboard', 'AdminDashboard')->name('admin.dashboard');
-Route::get('/admin/spcialities', 'AdminSpcialities')->name('admin.spcialities');
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/all/specialities', [SpecialityController::class, 'index'])->name('admin.specialities.all');
+    Route::post('/admin/add/specialities', [SpecialityController::class, 'store'])->name('admin.specialities.store');
+    Route::put('/admin/edit/specialities/{speciality}', [SpecialityController::class, 'update'])->name('admin.specialities.update');
+    Route::delete('/admin/delete/specialities/{speciality}', [SpecialityController::class, 'destroy'])->name('admin.specialities.destroy');
 
-    });
-    /// End Admin Group Middleware 
+    Route::redirect('/admin/spcialities', '/admin/all/specialities')->name('admin.spcialities');
+});
+// / End Admin Group Middleware
 
 // Shared logout (works for both roles via the auth guard)
-Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 

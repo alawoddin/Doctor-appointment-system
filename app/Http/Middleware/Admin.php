@@ -16,10 +16,10 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
 
-         if (! auth('admin')->check()) {
-            return redirect()->route('agent.login');
+        if (! auth('admin')->check()) {
+            return redirect()->route('admin.login');
         }
-        
+
         return $next($request);
     }
 }
