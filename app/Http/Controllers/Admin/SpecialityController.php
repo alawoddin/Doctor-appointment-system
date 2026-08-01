@@ -15,19 +15,19 @@ class SpecialityController extends Controller
         private SpecialityImageService $imageService
     ) {}
 
-    public function index(): View
+    public function AllSpecialities(): View
     {
         $specialities = Speciality::latest()->get();
 
         return view('admin.dashboard.spcialities.all_spcialities', compact('specialities'));
     }
 
-    public function create(): View
+    public function AddSpecialities(): View
     {
         return view('admin.dashboard.spcialities.add_spcialities');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function StoreSpecialities(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:specialities,name',
@@ -50,12 +50,12 @@ class SpecialityController extends Controller
             ->with('success', 'Speciality added successfully.');
     }
 
-    public function edit(Speciality $speciality): View
+    public function EditSpecialities(Speciality $speciality): View
     {
         return view('admin.dashboard.spcialities.edit_spcialities', compact('speciality'));
     }
 
-    public function update(Request $request, Speciality $speciality): RedirectResponse
+    public function UpdateSpecialities(Request $request, Speciality $speciality): RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:specialities,name,'.$speciality->id,
@@ -79,7 +79,7 @@ class SpecialityController extends Controller
             ->with('success', 'Speciality updated successfully.');
     }
 
-    public function destroy(Speciality $speciality): RedirectResponse
+    public function DeleteSpecialities(Speciality $speciality): RedirectResponse
     {
         $this->imageService->delete($speciality->image);
         $speciality->delete();
