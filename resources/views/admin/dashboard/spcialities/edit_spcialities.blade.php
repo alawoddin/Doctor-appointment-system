@@ -24,29 +24,23 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.specialities.update', $speciality) }}" method="POST"
+                <form action="{{ route('admin.specialities.update') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $speciality->id }}">
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="mb-2">Speciality Name</label>
                                 <input type="text" name="name" class="form-control"
-                                    value="{{ old('name', $speciality->name) }}" required>
+                                    value="{{  $speciality->name }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
-                                <label class="mb-2">Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                                @if ($speciality->image)
-                                    <div class="mt-2">
-                                        <img src="{{ asset('storage/'.$speciality->image) }}"
-                                            alt="{{ $speciality->name }}" class="rounded" width="80" height="80">
-                                        <small class="d-block text-muted">Leave empty to keep current image.</small>
-                                    </div>
-                                @endif
+                                  <input type="file" class="form-control" name="image" id="image">  
+                                 <img id="showImage" src="{{ asset($speciality->image) }}"
+                                        class="rounded-circle avatar-xl img-thumbnail float-start" alt="image profile">
                             </div>
                         </div>
                     </div>
