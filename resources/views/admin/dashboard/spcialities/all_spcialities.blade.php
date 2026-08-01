@@ -31,6 +31,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Specialities</th>
+                                <th>image</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -38,15 +39,9 @@
                             @forelse ($specialities as $speciality)
                                 <tr>
                                     <td>#SP{{ str_pad((string) $speciality->id, 3, '0', STR_PAD_LEFT) }}</td>
+                                    <td>{{ $speciality->name }}</td>
                                     <td>
-                                        <h2 class="table-avatar">
-                                            <span class="avatar avatar-sm me-2">
-                                                <img class="avatar-img"
-                                                    src="{{ $speciality->image ? asset('storage/'.$speciality->image) : asset('backend/assets/img/specialities/specialities-01.svg') }}"
-                                                    alt="{{ $speciality->name }}">
-                                            </span>
-                                            <span>{{ $speciality->name }}</span>
-                                        </h2>
+                                        <img src="{{ asset($speciality->image) }}" alt="{{ $speciality->name }}" width="50" height="50">
                                     </td>
                                     <td>
                                         <div class="actions">
@@ -55,7 +50,7 @@
                                                 <i class="fe fe-pencil"></i> Edit
                                             </a>
                                             <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal"
-                                                href="#delete_speciality_{{ $speciality->id }}">
+                                                href="{{ route('admin.specialities.delete' , $speciality->id) }}">
                                                 <i class="fe fe-trash"></i> Delete
                                             </a>
                                         </div>
@@ -75,28 +70,6 @@
 </div>
 </div>
 
-@foreach ($specialities as $speciality)
-    <!-- Delete Modal -->
-    <div class="modal fade" id="delete_speciality_{{ $speciality->id }}" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form-content p-2">
-                        <h4 class="modal-title">Delete</h4>
-                        <p class="mb-4">Are you sure you want to delete <strong>{{ $speciality->name }}</strong>?</p>
-                        <form action="{{ route('admin.specialities.destroy', $speciality) }}" method="POST"
-                            class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Delete Modal -->
-@endforeach
+
 
 @endsection

@@ -30,13 +30,13 @@
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="mb-2">Speciality Name</label>
-                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                                <input type="text" name="name" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label class="mb-2">Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <input type="file" name="image" class="form-control">
                             </div>
                         </div>
                     </div>
