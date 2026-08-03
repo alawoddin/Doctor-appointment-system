@@ -126,6 +126,7 @@
                                     <div class="modal-body">
                                         <form id="profileForm" action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" name="id" value="{{ $admin->id }}">
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
                                                     <div class="mb-3 form-group">

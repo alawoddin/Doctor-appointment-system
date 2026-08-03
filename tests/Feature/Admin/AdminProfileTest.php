@@ -35,6 +35,7 @@ it('displays admin profile with data', function () {
 it('updates admin profile details', function () {
     $this->actingAs($this->admin, 'admin')
         ->post(route('admin.profile.update'), [
+            'id' => $this->admin->id,
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'johndoe@example.com',
@@ -44,7 +45,7 @@ it('updates admin profile details', function () {
             'about' => 'Updated about text.',
         ])
         ->assertRedirect()
-        ->assertSessionHas('message', 'Profile Updated Successfully');
+        ->assertSessionHas('message', 'Profile Updated without image Successfully');
 
     $this->admin->refresh();
 
@@ -89,13 +90,14 @@ it('uploads admin profile photo', function () {
 
     $this->actingAs($this->admin, 'admin')
         ->post(route('admin.profile.update'), [
+            'id' => $this->admin->id,
             'first_name' => 'Ryan',
             'last_name' => 'Taylor',
             'email' => 'admin@example.com',
             'profile_photo' => $file,
         ])
         ->assertRedirect()
-        ->assertSessionHas('message', 'Profile Updated Successfully');
+        ->assertSessionHas('message', 'Profile Updated with image Successfully');
 
     $this->admin->refresh();
 
