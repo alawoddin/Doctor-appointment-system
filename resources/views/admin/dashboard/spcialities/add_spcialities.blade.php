@@ -1,5 +1,10 @@
 @extends('admin.admin_master')
 @section('admin')
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
 <div class="content container-fluid">
 
 <div class="page-header">
@@ -24,17 +29,17 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.specialities.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('admin.specialities.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="mb-3">
+                        <div class="col-12 col-md-6 ">
+                            <div class="mb-3 form-group">
                                 <label class="mb-2">Speciality Name</label>
                                 <input type="text" name="name" class="form-control">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <div class="mb-3">
+                        <div class="col-12 col-md-6 ">
+                            <div class="mb-3 form-group" >
                                 <label class="mb-2">Image</label>
                                 <input type="file" name="image" class="form-control">
                             </div>
@@ -47,4 +52,45 @@
     </div>
 </div>
 </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    image: {
+                        required: true,
+                    },
+                   
+
+                },
+                messages: {
+                    name: {
+                        required: 'Please Enter Speciality name',
+                    },
+                    image: {
+                        required: 'Please Upload an image',
+                    },
+                 
+
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+            });
+        });
+    </script>
+
+
 @endsection

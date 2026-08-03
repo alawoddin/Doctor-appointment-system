@@ -80,6 +80,8 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     	<script src="{{ asset('backend/js/code.js') }}"></script>
+
+		<script src="{{ asset('backend/js/validate.min.js') }}"></script>
 		
 		<!-- Custom JS -->
 		<script  src="{{ asset('admin/assets/js/script.js') }}"></script>
