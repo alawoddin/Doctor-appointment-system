@@ -1,5 +1,10 @@
 @extends('admin.admin_master')
 @section('admin')
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
 <div class="content container-fluid">
 
 <div class="page-header">
@@ -38,11 +43,20 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
+                                <label class="mb-2">Image</label>
                                   <input type="file" class="form-control" name="image" id="image">  
-                                 <img id="showImage" src="{{ asset($speciality->image) }}"
+                                 
+                            </div>
+                        </div>
+
+                          <div class="col-12 col-md-6 ">
+                            <div class="mb-3 form-group" >
+                                <label for="validationDefault02" class="form-label"> </label>
+                                    <img id="showImage" src="{{ asset($speciality->image) }}"
                                         class="rounded-circle avatar-xl img-thumbnail float-start" alt="image profile">
                             </div>
                         </div>
+
                     </div>
                     <button type="submit" class="btn btn-primary">Update Speciality</button>
                 </form>
@@ -51,4 +65,19 @@
     </div>
 </div>
 </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0']);
+            })
+        })
+    </script>
+
+
 @endsection

@@ -41,17 +41,39 @@
                         <div class="col-12 col-md-6 ">
                             <div class="mb-3 form-group" >
                                 <label class="mb-2">Image</label>
-                                <input type="file" name="image" class="form-control">
+                                <input type="file" id="image" name="image" class="form-control">
                             </div>
                         </div>
+
+                         <div class="col-12 col-md-6 ">
+                            <div class="mb-3 form-group" >
+                                <label for="validationDefault02" class="form-label"> </label>
+                                    <img id="showImage" src="{{ url('upload/no_image.jpg') }}"
+                                        class="rounded-circle avatar-xl img-thumbnail float-start" alt="image profile">
+                            </div>
+                        </div>
+
+
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Speciality</button>
+                    <button type="submit" class="btn btn-primary mt-3">Save Speciality</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 </div>
+
+   <script type="text/javascript">
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0']);
+            })
+        })
+    </script>
 
 
     <script type="text/javascript">
