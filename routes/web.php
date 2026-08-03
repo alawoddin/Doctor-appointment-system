@@ -36,26 +36,25 @@ Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])
     ->name('admin.dashboard');
 
 Route::middleware(['admin'])->group(function () {
-    // Route::get('/admin/all/specialities', [SpecialityController::class, 'index'])->name('admin.specialities.all');
-    // Route::get('/admin/add/specialities', [SpecialityController::class, 'create'])->name('admin.specialities.create');
-    // Route::post('/admin/add/specialities', [SpecialityController::class, 'store'])->name('admin.specialities.store');
-    // Route::get('/admin/edit/specialities/{speciality}', [SpecialityController::class, 'edit'])->name('admin.specialities.edit');
-    // Route::put('/admin/edit/specialities/{speciality}', [SpecialityController::class, 'update'])->name('admin.specialities.update');
-    // Route::delete('/admin/delete/specialities/{speciality}', [SpecialityController::class, 'destroy'])->name('admin.specialities.destroy');
 
-    // Route::redirect('/admin/spcialities', '/admin/all/specialities')->name('admin.spcialities');
+    Route::controller(SpecialityController::class)->group(function () {
 
-    
-Route::controller(SpecialityController::class)->group(function() {
+        Route::get('/admin/all/specialities', 'AllSpecialities')->name('admin.specialities.all');
+        Route::get('/admin/add/specialities', 'AddSpecialities')->name('admin.specialities.create');
+        Route::post('/admin/store/specialities', 'StoreSpecialities')->name('admin.specialities.store');
+        Route::get('/admin/edit/specialities/{speciality}', 'EditSpecialities')->name('admin.specialities.edit');
+        Route::post('/admin/update/specialities', 'UpdateSpecialities')->name('admin.specialities.update');
+        Route::get('/admin/delete/specialities/{speciality}', 'DeleteSpecialities')->name('admin.specialities.delete');
 
-    Route::get('/admin/all/specialities', 'AllSpecialities')->name('admin.specialities.all');
-    Route::get('/admin/add/specialities', 'AddSpecialities')->name('admin.specialities.create');
-    Route::post('/admin/store/specialities', 'StoreSpecialities')->name('admin.specialities.store');
-    Route::get('/admin/edit/specialities/{speciality}', 'EditSpecialities')->name('admin.specialities.edit');
-    Route::post('/admin/update/specialities', 'UpdateSpecialities')->name('admin.specialities.update');
-    Route::get('/admin/delete/specialities/{speciality}', 'DeleteSpecialities')->name('admin.specialities.delete');
+    });
 
-});
+    Route::controller(AdminController::class)->group(function () {
+
+        Route::get('/admin/profile', 'AdminProfile')->name('admin.profile');
+        Route::post('/admin/update/profile', 'UpdateAdminProfile')->name('admin.profile.update');
+        Route::post('/admin/update/password', 'UpdateAdminPassword')->name('admin.profile.password');
+
+    });
 
 });
 // / End Admin Group Middleware

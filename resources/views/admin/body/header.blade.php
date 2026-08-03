@@ -29,6 +29,12 @@
 <!-- /Mobile Menu Toggle -->
 
 <!-- Header Right Menu -->
+@php
+    $authAdmin = Auth::guard('admin')->user();
+    $headerPhoto = $authAdmin?->profile_photo
+        ? asset($authAdmin->profile_photo)
+        : asset('admin/assets/img/profiles/avatar-01.jpg');
+@endphp
 <ul class="nav user-menu">
 
     <!-- Notifications -->
@@ -107,19 +113,19 @@
     <!-- User Menu -->
     <li class="nav-item dropdown has-arrow">
         <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-              <span class="user-img"><img class="rounded-circle" src="{{ asset('admin/assets/img/profiles/avatar-01.jpg') }}" width="31" alt="Ryan Taylor"></span>
+              <span class="user-img"><img class="rounded-circle" src="{{ $headerPhoto }}" width="31" alt="{{ $authAdmin?->full_name }}"></span>
         </a>
         <div class="dropdown-menu">
             <div class="user-header">
                 <div class="avatar avatar-sm">
-                    <img src="{{ asset('admin/assets/img/profiles/avatar-01.jpg') }}" alt="User Image" class="avatar-img rounded-circle">
+                    <img src="{{ $headerPhoto }}" alt="User Image" class="avatar-img rounded-circle">
                 </div>
                 <div class="user-text">
-                    <h6>Ryan Taylor</h6>
+                    <h6>{{ $authAdmin?->full_name }}</h6>
                     <p class="text-muted mb-0">Administrator</p>
                 </div>
             </div>
-            <a class="dropdown-item" href="profile.html">My Profile</a>
+            <a class="dropdown-item" href="{{ route('admin.profile') }}">My Profile</a>
             <a class="dropdown-item" href="settings.html">Settings</a>
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
