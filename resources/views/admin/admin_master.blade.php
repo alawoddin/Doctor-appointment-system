@@ -36,6 +36,10 @@
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="{{ asset('admin/assets/css/custom.css') }}">
+
+
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+		
         
     </head>
     <body>
@@ -73,6 +77,9 @@
 		<script src="{{ asset('admin/assets/plugins/raphael/raphael.min.js') }}"></script>    
 		<script src="{{ asset('admin/assets/plugins/morris/morris.min.js') }}"></script>  
 		<script src="{{ asset('admin/assets/js/chart.morris.js') }}"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    	<script src="{{ asset('backend/js/code.js') }}"></script>
 		
 		<!-- Custom JS -->
 		<script  src="{{ asset('admin/assets/js/script.js') }}"></script>

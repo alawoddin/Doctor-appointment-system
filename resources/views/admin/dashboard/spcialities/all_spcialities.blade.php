@@ -49,8 +49,8 @@
                                                 href="{{ route('admin.specialities.edit', $speciality) }}">
                                                 <i class="fe fe-pencil"></i> Edit
                                             </a>
-                                            <a class="btn btn-sm bg-danger-light" 
-                                                href="{{ route('admin.specialities.delete' , $speciality->id) }}">
+                                            <a class="btn btn-sm bg-danger-light"  id="delete"
+                                                href="{{ route('admin.specialities.delete' , $speciality->id)  }}">
                                                 <i class="fe fe-trash"></i> Delete
                                             </a>
                                         </div>
