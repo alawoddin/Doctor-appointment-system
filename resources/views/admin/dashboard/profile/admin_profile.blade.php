@@ -1,5 +1,8 @@
 @extends('admin.admin_master')
 @section('admin')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 @php
     $profilePhoto = $admin->profile_photo
         ? asset($admin->profile_photo)
@@ -121,47 +124,47 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
+                                        <form id="profileForm" action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">First Name</label>
-                                                        <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $admin->first_name) }}" required>
+                                                        <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $admin->first_name) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Last Name</label>
-                                                        <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $admin->last_name) }}" required>
+                                                        <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $admin->last_name) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Date of Birth</label>
                                                         <input type="date" name="date_of_birth" class="form-control" value="{{ old('date_of_birth', $admin->date_of_birth?->format('Y-m-d')) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Email ID</label>
-                                                        <input type="email" name="email" class="form-control" value="{{ old('email', $admin->email) }}" required>
+                                                        <input type="email" name="email" class="form-control" value="{{ old('email', $admin->email) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Mobile</label>
                                                         <input type="text" name="phone" class="form-control" value="{{ old('phone', $admin->phone) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">About</label>
                                                         <textarea name="about" class="form-control" rows="3">{{ old('about', $admin->about) }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Profile Photo</label>
                                                         <input type="file" name="profile_photo" class="form-control" accept="image/*">
                                                     </div>
@@ -170,31 +173,31 @@
                                                     <h5 class="form-title"><span>Address</span></h5>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Address</label>
                                                         <input type="text" name="address" class="form-control" value="{{ old('address', $admin->address) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">City</label>
                                                         <input type="text" name="city" class="form-control" value="{{ old('city', $admin->city) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">State</label>
                                                         <input type="text" name="state" class="form-control" value="{{ old('state', $admin->state) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Zip Code</label>
                                                         <input type="text" name="zip_code" class="form-control" value="{{ old('zip_code', $admin->zip_code) }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 form-group">
                                                         <label class="mb-2">Country</label>
                                                         <input type="text" name="country" class="form-control" value="{{ old('country', $admin->country) }}">
                                                     </div>
@@ -223,19 +226,19 @@
                         <h5 class="card-title">Change Password</h5>
                         <div class="row">
                             <div class="col-md-10 col-lg-6">
-                                <form action="{{ route('admin.profile.password') }}" method="POST">
+                                <form id="passwordForm" action="{{ route('admin.profile.password') }}" method="POST">
                                     @csrf
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-group">
                                         <label class="mb-2">Old Password</label>
-                                        <input type="password" name="current_password" class="form-control" required>
+                                        <input type="password" name="current_password" class="form-control">
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-group">
                                         <label class="mb-2">New Password</label>
-                                        <input type="password" name="password" class="form-control" required>
+                                        <input type="password" name="password" id="password" class="form-control">
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-group">
                                         <label class="mb-2">Confirm Password</label>
-                                        <input type="password" name="password_confirmation" class="form-control" required>
+                                        <input type="password" name="password_confirmation" class="form-control">
                                     </div>
                                     <button class="btn btn-primary" type="submit">Save Changes</button>
                                 </form>
@@ -251,4 +254,87 @@
 </div>
 
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#profileForm').validate({
+            rules: {
+                first_name: {
+                    required: true,
+                },
+                last_name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+            },
+            messages: {
+                first_name: {
+                    required: 'Please Enter First Name',
+                },
+                last_name: {
+                    required: 'Please Enter Last Name',
+                },
+                email: {
+                    required: 'Please Enter Email',
+                    email: 'Please Enter Valid Email',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+
+        $('#passwordForm').validate({
+            rules: {
+                current_password: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                },
+                password_confirmation: {
+                    required: true,
+                    equalTo: '#password',
+                },
+            },
+            messages: {
+                current_password: {
+                    required: 'Please Enter Old Password',
+                },
+                password: {
+                    required: 'Please Enter New Password',
+                    minlength: 'Password must be at least 6 characters',
+                },
+                password_confirmation: {
+                    required: 'Please Confirm Password',
+                    equalTo: 'Password does not match',
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+</script>
+
 @endsection

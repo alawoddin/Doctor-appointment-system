@@ -68,21 +68,6 @@ class AdminController extends Controller
     {
         $admin = Auth::guard('admin')->user();
 
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'date_of_birth' => 'nullable|date',
-            'email' => 'required|email|unique:admins,email,'.$admin->id,
-            'phone' => 'nullable|string|max:20',
-            'about' => 'nullable|string',
-            'address' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|string|max:20',
-            'country' => 'nullable|string|max:255',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-        ]);
-
         $data = $request->only([
             'first_name',
             'last_name',
@@ -130,11 +115,6 @@ class AdminController extends Controller
 
     public function UpdateAdminPassword(Request $request)
     {
-        $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
         $admin = Auth::guard('admin')->user();
 
         if (! Hash::check($request->current_password, $admin->password)) {
